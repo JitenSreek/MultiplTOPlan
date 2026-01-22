@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Plan Enhancement - UI Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #2e6bdc;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .mockup-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .header {
+            background: #2e6bdc;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2e6bdc;
+        }
+
+        /* Main Layout - Left Panel (ASN Selection) */
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .left-panel {
+            flex: 0 0 30%;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        /* Match existing menu-card styles */
+        .asn-card {
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            width: auto;
+            border-radius: 20px;
+            line-height: 1.8;
+            color: rgb(100, 100, 100);
+            margin-bottom: 10px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            letter-spacing: 0.2px;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .asn-card.selected {
+            background: var(--color-primary, #2e6bdc);
+            color: white;
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.14);
+        }
+
+        .asn-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #666;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .checkbox.checked {
+            background: #2e6bdc;
+            border-color: #2e6bdc;
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: -2px;
+            left: 3px;
+            font-size: 14px;
+        }
+
+        .asn-info {
+            flex: 1;
+        }
+
+        .asn-number {
+            font-weight: bold;
+        }
+        
+        .asn-card .asn-number {
+            color: rgb(100, 100, 100);
+        }
+        
+        .asn-card.selected .asn-number {
+            color: white;
+        }
+
+        .asn-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .route-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* Right Panel (Container Selection) */
+        .right-panel {
+            flex: 0 0 25%;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        /* Match existing menu-card styles for containers */
+        .container-card {
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            width: auto;
+            border-radius: 20px;
+            line-height: 1.8;
+            color: rgb(100, 100, 100);
+            margin-bottom: 10px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            letter-spacing: 0.2px;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .container-card.selected-planning {
+            background: var(--color-primary, #2e6bdc);
+            color: white;
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.14);
+        }
+
+        .container-checkbox {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .container-number {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .container-card .container-number {
+            color: rgb(100, 100, 100);
+        }
+        
+        .container-card.selected-planning .container-number {
+            color: white;
+        }
+
+        .container-details {
+            font-size: 12px;
+        }
+        
+        .container-card .container-details {
+            color: rgb(100, 100, 100);
+        }
+        
+        .container-card.selected-planning .container-details {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .selected-count {
+            background: var(--color-primary, #2e6bdc);
+            color: white;
+            padding: 10px;
+            border-radius: 20px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        /* Dialog Mockup */
+        .dialog-mockup {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .dialog-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .selection-summary {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .summary-badge {
+            background: #2e6bdc;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        /* Form Fields */
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-field {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        /* Combinations Section */
+        .combinations-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .add-btn {
+            background: var(--color-primary, #2e6bdc);
+            color: white;
+            border: 2px solid var(--color-primary, #2e6bdc);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            height: 35px;
+        }
+
+        .add-btn:hover {
+            background: #1e5bc2;
+            border-color: #1e5bc2;
+        }
+
+        .validation-message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .validation-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+
+        .validation-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #66bb6a;
+        }
+
+        /* Combination Row */
+        .combination-row {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .row-number {
+            font-weight: bold;
+            color: #2e6bdc;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            background: white;
+            color: #f44336;
+            border: 2px solid #f44336;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .delete-btn:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        .combination-fields {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-hint {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        .dialog-footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .validation-summary {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .validation-summary.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Match existing round-border button styles */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--color-primary, #2e6bdc);
+            color: white;
+            border: 2px solid var(--color-primary, #2e6bdc);
+        }
+
+        .btn-primary:hover {
+            background: #1e5bc2;
+            border-color: #1e5bc2;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #ccc;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+
+        .legend {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .legend h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <div class="header">
+            <h1>Transport Plan Enhancement - UI Mockup</h1>
+            <p>Proposed UI changes aligned with existing UI/UX patterns - Multi-SCN/Container selection with Multiple Vehicle-Vendor Combinations</p>
+            <p style="margin-top: 10px; font-size: 12px; opacity: 0.8;">This mockup uses existing component styles: menu-card, round-border buttons, and consistent form patterns</p>
+        </div>
+
+        <!-- Section 1: Main Layout with Multi-Selection -->
+        <div class="section">
+            <div class="section-title">1. Main Screen - Multi-Selection Interface</div>
+            
+            <div class="main-layout">
+                <!-- Left Panel: ASN Cards with Checkboxes -->
+                <div class="left-panel">
+                    <h3 style="margin-bottom: 15px; color: #333;">ASN List (Select Multiple)</h3>
+                    
+                    <div class="asn-card selected">
+                        <div class="asn-card-header">
+                            <div class="checkbox checked"></div>
+                            <div class="asn-info">
+                                <div class="asn-number">ASN No: ASN001234</div>
+                                <div class="asn-date">📅 2024-01-15</div>
+                            </div>
+                        </div>
+                        <div class="route-info">
+                            <span>Mumbai Port</span> → <span>Delhi Plant</span>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                            🏭 Plant: Delhi Manufacturing (DL01)
+                        </div>
+                    </div>
+
+                    <div class="asn-card selected">
+                        <div class="asn-card-header">
+                            <div class="checkbox checked"></div>
+                            <div class="asn-info">
+                                <div class="asn-number">ASN No: ASN001235</div>
+                                <div class="asn-date">📅 2024-01-15</div>
+                            </div>
+                        </div>
+                        <div class="route-info">
+                            <span>Mumbai Port</span> → <span>Delhi Plant</span>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                            🏭 Plant: Delhi Manufacturing (DL01)
+                        </div>
+                    </div>
+
+                    <div class="asn-card">
+                        <div class="asn-card-header">
+                            <div class="checkbox"></div>
+                            <div class="asn-info">
+                                <div class="asn-number">ASN No: ASN001236</div>
+                                <div class="asn-date">📅 2024-01-16</div>
+                            </div>
+                        </div>
+                        <div class="route-info">
+                            <span>Chennai Port</span> → <span>Bangalore Plant</span>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                            🏭 Plant: Bangalore Manufacturing (BLR01)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Container Selection -->
+                <div class="right-panel">
+                    <h3 style="margin-bottom: 15px; color: #333;">Container Details</h3>
+                    
+                    <div class="container-card selected-planning">
+                        <div class="container-checkbox">
+                            <div class="checkbox checked"></div>
+                        </div>
+                        <div class="container-number">Container No: CONT001</div>
+                        <div class="container-details">Type: 40FT HC</div>
+                        <div class="container-details">Seal No: SEAL001</div>
+                    </div>
+
+                    <div class="container-card selected-planning">
+                        <div class="container-checkbox">
+                            <div class="checkbox checked"></div>
+                        </div>
+                        <div class="container-number">Container No: CONT002</div>
+                        <div class="container-details">Type: 40FT HC</div>
+                        <div class="container-details">Seal No: SEAL002</div>
+                    </div>
+
+                    <div class="container-card">
+                        <div class="container-checkbox">
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="container-number">Container No: CONT003</div>
+                        <div class="container-details">Type: 20FT</div>
+                        <div class="container-details">Seal No: SEAL003</div>
+                    </div>
+
+                    <div class="selected-count">
+                        Selected: 2 Containers
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="flex: 1; display: flex; align-items: flex-start; justify-content: center; padding-top: 20px; gap: 10px;">
+                    <button class="btn btn-secondary" style="padding: 12px 24px; font-size: 16px;">
+                        🔍 Search Documents
+                    </button>
+                    <button class="btn btn-primary" style="padding: 12px 24px; font-size: 16px;">
+                        📋 Transport Order Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Enhanced Dialog -->
+        <div class="section">
+            <div class="section-title">2. Transport Plan Dialog - Multiple Combinations</div>
+            
+            <div class="dialog-mockup">
+                <div class="dialog-header">
+                    <div class="dialog-title">Order Details</div>
+                    <button class="close-btn">×</button>
+                </div>
+
+                <!-- Selection Summary -->
+                <div class="selection-summary">
+                    <div class="summary-item">
+                        <span>Selected SCNs:</span>
+                        <span class="summary-badge">2</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Selected Containers:</span>
+                        <span class="summary-badge">2</span>
+                    </div>
+                </div>
+
+                <!-- Common Fields -->
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="form-label">Source</label>
+                        <input type="text" class="form-input" value="Mumbai Port" readonly>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Destination</label>
+                        <input type="text" class="form-input" value="Delhi Plant" readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="form-label">Service</label>
+                        <select class="form-select">
+                            <option>FTL Service (FTLE)</option>
+                            <option>LTL Service (LTLE)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Combinations Section -->
+                <div class="combinations-section">
+                    <div class="section-header">
+                        <h3>Vehicle-Vendor Combinations</h3>
+                        <button class="add-btn">+ Add Combination</button>
+                    </div>
+
+                    <!-- Validation Message -->
+                    <div class="validation-message success">
+                        <span>✓</span>
+                        <span>Total Vehicles: 2 / Selected Containers: 2 (Valid)</span>
+                    </div>
+
+                    <!-- Combination Row 1 -->
+                    <div class="combination-row">
+                        <div class="row-header">
+                            <span class="row-number">Combination 1</span>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                        <div class="combination-fields">
+                            <div class="field-group">
+                                <label class="form-label">Vehicle Type</label>
+                                <select class="form-select">
+                                    <option>20FT Container Truck (15T - 20T)</option>
+                                    <option>40FT Container Truck (25T - 30T)</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Vendor</label>
+                                <select class="form-select">
+                                    <option>ABC Transport (VEND001)</option>
+                                    <option>XYZ Logistics (VEND002)</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">No of Vehicles</label>
+                                <input type="number" class="form-input" value="1" min="1" max="2">
+                                <div class="field-hint">Max: 2</div>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Allocated Containers</label>
+                                <input type="text" class="form-input" value="1" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Combination Row 2 -->
+                    <div class="combination-row">
+                        <div class="row-header">
+                            <span class="row-number">Combination 2</span>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                        <div class="combination-fields">
+                            <div class="field-group">
+                                <label class="form-label">Vehicle Type</label>
+                                <select class="form-select">
+                                    <option>20FT Container Truck (15T - 20T)</option>
+                                    <option>40FT Container Truck (25T - 30T)</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Vendor</label>
+                                <select class="form-select">
+                                    <option>ABC Transport (VEND001)</option>
+                                    <option>XYZ Logistics (VEND002)</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">No of Vehicles</label>
+                                <input type="number" class="form-input" value="1" min="1" max="1">
+                                <div class="field-hint">Max: 1 (remaining)</div>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Allocated Containers</label>
+                                <input type="text" class="form-input" value="1" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialog Footer -->
+                <div class="dialog-footer">
+                    <div class="validation-summary success">
+                        <span>✓</span>
+                        <span>Ready to create 2 Transport Orders</span>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary">Cancel</button>
+                        <button class="btn btn-primary">Create Transport Orders (2)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Error State Example -->
+        <div class="section">
+            <div class="section-title">3. Validation Error State</div>
+            
+            <div class="dialog-mockup">
+                <div class="combinations-section">
+                    <div class="validation-message error">
+                        <span>⚠</span>
+                        <span>Total Vehicles: 3 / Selected Containers: 2 (Exceeds limit!)</span>
+                    </div>
+
+                    <div class="combination-row">
+                        <div class="row-header">
+                            <span class="row-number">Combination 1</span>
+                        </div>
+                        <div class="combination-fields">
+                            <div class="field-group">
+                                <label class="form-label">Vehicle Type</label>
+                                <select class="form-select">
+                                    <option>20FT Container Truck</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Vendor</label>
+                                <select class="form-select">
+                                    <option>ABC Transport</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">No of Vehicles</label>
+                                <input type="number" class="form-input" value="2" style="border-color: #f44336;">
+                                <div class="field-hint" style="color: #f44336;">Max: 2</div>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Allocated Containers</label>
+                                <input type="text" class="form-input" value="2" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="combination-row">
+                        <div class="row-header">
+                            <span class="row-number">Combination 2</span>
+                        </div>
+                        <div class="combination-fields">
+                            <div class="field-group">
+                                <label class="form-label">Vehicle Type</label>
+                                <select class="form-select">
+                                    <option>40FT Container Truck</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Vendor</label>
+                                <select class="form-select">
+                                    <option>XYZ Logistics</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">No of Vehicles</label>
+                                <input type="number" class="form-input" value="1" style="border-color: #f44336;" min="1" max="0">
+                                <div class="field-hint" style="color: #f44336;">Max: 0 (no containers available)</div>
+                            </div>
+                            <div class="field-group">
+                                <label class="form-label">Allocated Containers</label>
+                                <input type="text" class="form-input" value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dialog-footer">
+                    <div class="validation-summary error">
+                        <span>⚠</span>
+                        <span>Total vehicles (3) cannot exceed selected containers (2)</span>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary">Cancel</button>
+                        <button class="btn btn-primary" disabled>Create Transport Orders (2)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Search Dialog -->
+        <div class="section">
+            <div class="section-title">4. Search Documents Dialog</div>
+            
+            <div class="dialog-mockup">
+                <div class="dialog-header">
+                    <div class="dialog-title">Search Documents</div>
+                    <button class="close-btn">×</button>
+                </div>
+
+                <!-- Search Type Selection -->
+                <div style="margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 4px;">
+                    <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;">Search By</h3>
+                    <div style="display: flex; gap: 20px;">
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="radio" name="searchType" value="ASN" checked style="width: 18px; height: 18px;">
+                            <span>ASN Number</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="radio" name="searchType" value="SCN" style="width: 18px; height: 18px;">
+                            <span>SCN Number</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="radio" name="searchType" value="CONTAINER" style="width: 18px; height: 18px;">
+                            <span>Container Number</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Search Input -->
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label">Enter ASN Numbers</label>
+                    <textarea 
+                        class="form-input" 
+                        rows="4"
+                        placeholder="Enter multiple values separated by comma or new line&#10;Example: ASN001234, ASN001235, ASN001236"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; resize: vertical;">
+ASN001234, ASN001235, ASN001236</textarea>
+                    <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                        <span>You can enter multiple values separated by comma (,) or new line</span>
+                        <span style="display: block; color: #2e6bdc; font-weight: 500; margin-top: 5px;">3 value(s) entered</span>
+                    </div>
+                </div>
+
+                <!-- Parsed Values as Chips -->
+                <div style="margin-bottom: 20px; padding: 15px; background: #e3f2fd; border-radius: 4px;">
+                    <h4 style="margin-bottom: 10px; font-size: 14px; color: #333;">Search Values (3):</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <div style="background: #2e6bdc; color: white; padding: 5px 12px; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                            ASN001234
+                            <span style="cursor: pointer; font-weight: bold; margin-left: 5px;">×</span>
+                        </div>
+                        <div style="background: #2e6bdc; color: white; padding: 5px 12px; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                            ASN001235
+                            <span style="cursor: pointer; font-weight: bold; margin-left: 5px;">×</span>
+                        </div>
+                        <div style="background: #2e6bdc; color: white; padding: 5px 12px; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                            ASN001236
+                            <span style="cursor: pointer; font-weight: bold; margin-left: 5px;">×</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Options -->
+                <div style="margin-bottom: 20px; display: flex; gap: 20px;">
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="checkbox" style="width: 18px; height: 18px;">
+                        <span>Exact Match Only</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="checkbox" style="width: 18px; height: 18px;">
+                        <span>Case Sensitive</span>
+                    </label>
+                </div>
+
+                <!-- Search Results Preview -->
+                <div style="margin-bottom: 20px; padding: 15px; background: #e8f5e9; border-radius: 4px; border: 1px solid #66bb6a;">
+                    <h4 style="margin-bottom: 10px; color: #2e7d32; font-size: 14px;">Found 2 matching document(s)</h4>
+                    <div style="display: flex; gap: 20px; font-size: 13px;">
+                        <div>ASNs: 2</div>
+                        <div>Containers: 4</div>
+                    </div>
+                </div>
+
+                <!-- Dialog Footer -->
+                <div class="dialog-footer">
+                    <button class="btn btn-secondary">Clear</button>
+                    <div class="button-group">
+                        <button class="btn btn-secondary">Cancel</button>
+                        <button class="btn btn-primary">Apply Search (2)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Active Search Indicator -->
+        <div class="section">
+            <div class="section-title">5. Active Search Indicator (After Search Applied)</div>
+            
+            <div style="padding: 10px 15px; background: #e3f2fd; border-left: 4px solid #2e6bdc; border-radius: 4px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <span style="font-size: 18px;">🔍</span>
+                        <span style="font-weight: 500;">Active Search: 3 filter(s) active</span>
+                        <div style="display: flex; gap: 5px; margin-left: 10px; flex-wrap: wrap;">
+                            <div style="background: #2e6bdc; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 5px;">
+                                ASN: ASN001234
+                                <span style="cursor: pointer; font-weight: bold; margin-left: 3px;">×</span>
+                            </div>
+                            <div style="background: #2e6bdc; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 5px;">
+                                ASN: ASN001235
+                                <span style="cursor: pointer; font-weight: bold; margin-left: 3px;">×</span>
+                            </div>
+                            <div style="background: #2e6bdc; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 5px;">
+                                ASN: ASN001236
+                                <span style="cursor: pointer; font-weight: bold; margin-left: 3px;">×</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        🗑️ Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div style="padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; margin-top: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px; color: #856404;">
+                    <span style="font-size: 18px;">⚠️</span>
+                    <span><strong>Note:</strong> Only matching documents are displayed. You can clear filters to see all documents.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <h4>UI Elements Legend:</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e3f2fd; border: 2px solid #2e6bdc;"></div>
+                <span>Selected ASN/Container (for planning)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffebee; border: 1px solid #ef5350;"></div>
+                <span>Validation Error State</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e8f5e9; border: 1px solid #66bb6a;"></div>
+                <span>Validation Success State</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f5f5f5; border: 1px solid #e0e0e0;"></div>
+                <span>Combination Row Background</span>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="section">
+            <div class="section-title">Key Features Demonstrated:</div>
+            <ul style="line-height: 2; padding-left: 20px; color: #555;">
+                <li><strong>Search Functionality:</strong> Search by ASN, SCN, or Container Number with multiple values</li>
+                <li><strong>Multi-Value Input:</strong> Enter multiple search values separated by comma or newline</li>
+                <li><strong>Parsed Values Display:</strong> Search values shown as removable chips</li>
+                <li><strong>Search Options:</strong> Exact match and case-sensitive options</li>
+                <li><strong>Results Preview:</strong> Shows count of found documents before applying</li>
+                <li><strong>Active Search Indicator:</strong> Displays active filters as chips above order list</li>
+                <li><strong>Filter Management:</strong> Remove individual filters or clear all at once</li>
+                <li><strong>Multi-Selection:</strong> Checkboxes on ASN cards and Container cards allow selecting multiple items</li>
+                <li><strong>Selection Summary:</strong> Shows count of selected SCNs and Containers</li>
+                <li><strong>Dynamic Combinations:</strong> Add/Remove combination rows with Vehicle Type, Vendor, and No of Vehicles</li>
+                <li><strong>Real-time Validation:</strong> Vehicle count validation against selected containers</li>
+                <li><strong>Allocation Display:</strong> Shows how many containers are allocated to each combination</li>
+                <li><strong>Max Limit Calculation:</strong> Each combination shows max vehicles based on remaining containers</li>
+                <li><strong>Multiple TO Creation:</strong> Button shows count of TOs to be created</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
